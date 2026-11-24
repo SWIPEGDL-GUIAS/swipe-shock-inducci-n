@@ -3,66 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWIPE® Shock — Inducción Interactiva</title>
+    <title>SWIPE® Shock — Inducción Interactiva | Mantenimiento</title>
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
+            --bg-dark: #090d16;
+            --card-bg: rgba(30, 41, 59, 0.85);
             --accent: #eab308;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border: #334155;
+            --border: rgba(51, 65, 85, 0.6);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; }
-        .container { width: 100%; max-width: 420px; background: var(--card-bg); border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5); overflow: hidden; display: flex; flex-direction: column; min-height: 580px; }
-        header { background: #111827; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--accent); font-weight: 600; }
-        .top-controls { display: flex; gap: 0.5rem; }
-        .control-btn { background: #334155; border: none; color: #fff; padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem; cursor: pointer; }
-        .control-btn.active { background: var(--accent); color: #111827; font-weight: 700; }
-        .content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-        h1 { font-size: 1.4rem; margin-bottom: 0.75rem; color: var(--text-main); }
-        p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem; }
-        .badge { display: inline-block; background: rgba(234, 179, 8, 0.15); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; }
-        .avatar-container { margin-bottom: 1rem; display: flex; justify-content: center; }
-        .avatar { width: 64px; height: 64px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 2px solid var(--accent); box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3); }
-        .btn { background: var(--accent); color: #111827; border: none; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; cursor: pointer; transition: opacity 0.2s; width: 100%; margin-top: auto; }
-        .btn:hover { opacity: 0.9; }
-        .footer-nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: #111827; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
-        .footer-nav button { background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 600; }
-        .list-box { text-align: left; background: #0f172a; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem; font-size: 0.85rem; }
-        .list-box li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; position: relative; overflow-x: hidden; }
+        
+        /* Fondo de partículas estelar idéntico */
+        .stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none; }
+        .star { position: absolute; background: #38bdf8; opacity: 0.5; border-radius: 50%; animation: twinkle 4s infinite ease-in-out; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+
+        .container { width: 100%; max-width: 440px; background: var(--card-bg); backdrop-filter: blur(12px); border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); overflow: hidden; display: flex; flex-direction: column; min-height: 600px; z-index: 1; }
+        header { background: rgba(17, 24, 39, 0.9); padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--accent); font-weight: 700; letter-spacing: 0.05em; }
+        
+        .top-controls { display: flex; gap: 0.4rem; }
+        .control-btn { background: rgba(51, 65, 85, 0.6); border: 1px solid var(--border); color: #fff; padding: 0.3rem 0.6rem; border-radius: 0.375rem; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; }
+        .control-btn.active { background: var(--accent); color: #111827; font-weight: 700; border-color: var(--accent); }
+        
+        .content { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        h1 { font-size: 1.45rem; margin-bottom: 0.75rem; color: var(--text-main); font-weight: 700; }
+        p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem; }
+        
+        .badge { display: inline-block; background: rgba(234, 179, 8, 0.15); color: var(--accent); padding: 0.3rem 0.85rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; margin-bottom: 1.25rem; border: 1px solid rgba(234, 179, 8, 0.3); }
+        
+        .avatar-container { margin-bottom: 1.25rem; display: flex; justify-content: center; }
+        .avatar { width: 72px; height: 72px; background: rgba(51, 65, 85, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; border: 2px solid var(--accent); box-shadow: 0 0 20px rgba(234, 179, 8, 0.3); animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+        .btn { background: var(--accent); color: #111827; border: none; padding: 0.85rem 1.5rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s; width: 100%; margin-top: auto; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3); }
+        .btn:hover { opacity: 0.95; transform: scale(1.02); }
+        
+        .footer-nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: rgba(17, 24, 39, 0.9); border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+        .footer-nav button { background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+        .footer-nav button:hover { text-decoration: underline; }
+        
+        .list-box { text-align: left; background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); padding: 1.15rem; border-radius: 0.85rem; margin-bottom: 1rem; font-size: 0.875rem; }
+        .list-box li { margin-bottom: 0.6rem; color: var(--text-muted); line-height: 1.4; }
         .list-box strong { color: var(--text-main); }
+        
+        .progress-dots { display: flex; gap: 4px; align-items: center; }
+        .dot { width: 6px; height: 6px; background: var(--border); border-radius: 50%; transition: all 0.3s; }
+        .dot.active { background: var(--accent); width: 16px; border-radius: 3px; }
     </style>
 </head>
 <body>
+
+    <!-- Fondo de partículas estelar -->
+    <div class="stars" id="stars-container"></div>
 
     <div class="container">
         <header>
             <span id="header-title">SWIPE® SHOCK · MANTENIMIENTO</span>
             <div class="top-controls">
-                <button class="control-btn" id="audio-btn" onclick="toggleAudio()">🔊 Audio</button>
+                <button class="control-btn" id="audio-btn" onclick="toggleAudio()">🔊 Voz</button>
                 <button class="control-btn" id="auto-btn" onclick="toggleAuto()">🤖 Auto</button>
             </div>
         </header>
         
         <div class="content" id="slide-content">
-            <!-- Contenido dinámico -->
+            <!-- Dinámico -->
         </div>
 
         <div class="footer-nav">
             <button onclick="prevSlide()" id="btn-prev">← Anterior</button>
-            <span id="slide-counter">1 / 11</span>
+            <div class="progress-dots" id="progress-dots"></div>
             <button onclick="nextSlide()" id="btn-next">Siguiente →</button>
         </div>
     </div>
 
     <script>
+        // Generar partículas estelares de fondo automáticamente
+        const starsContainer = document.getElementById('stars-container');
+        for (let i = 0; i < 35; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 4 + 's';
+            starsContainer.appendChild(star);
+        }
+
         const slides = [
             {
                 badge: "00 // BIENVENIDA",
                 title: "Conociendo SWIPE® Shock",
-                text: "Inducción interactiva con Gemi. Conoce el solvente dieléctrico biodegradable, su aplicación técnica segura y bioseguridad.",
+                text: "Hola, soy Gemi, tu asistente virtual. Te acompañaré en esta inducción para conocer el solvente dieléctrico biodegradable y su aplicación técnica segura en equipos eléctricos.",
+                speech: "Hola, soy Gemi, tu asistente virtual. Te acompañaré en esta inducción para conocer el solvente dieléctrico biodegradable y su aplicación técnica segura.",
                 showAvatar: true,
                 isWelcome: true
             },
@@ -70,17 +106,20 @@
                 badge: "01 // PERFIL DEL PRODUCTO",
                 title: "¿Qué es SWIPE® Shock?",
                 text: "Es un solvente dieléctrico formulado con destilados cítricos biodegradables (d-limoneno) diseñado para la limpieza de equipos eléctricos fuera de operación. Remueve grasa, aceite y carboncillos de forma eficaz.",
+                speech: "Es un solvente dieléctrico formulado con destilados cítricos biodegradables para la limpieza de equipos eléctricos fuera de operación. Remueve grasa, aceite y carboncillos.",
                 showAvatar: true
             },
             {
                 badge: "02 // MECANISMO TÉCNICO",
                 title: "Rigidez Dieléctrica Superior",
                 text: "Posee alta rigidez dieléctrica certificada en laboratorio (superior a 36.2 kV), lo que impide la formación de arcos eléctricos. No deja residuos de evaporación.",
+                speech: "Posee alta rigidez dieléctrica certificada superior a 36.2 kV, lo que impide la formación de arcos eléctricos sin dejar residuos de evaporación.",
                 showAvatar: true
             },
             {
                 badge: "03 // COMPATIBILIDAD",
                 title: "¿Dónde SÍ y dónde NO?",
+                speech: "Áreas de aplicación recomendadas: Motores eléctricos fuera de operación, tableros de control y conectores. Restricción absoluta: Nunca aplicar en equipos energizados.",
                 showAvatar: true,
                 isHtml: true,
                 text: `
@@ -93,11 +132,13 @@
                 badge: "04 // DOSIFICACIÓN",
                 title: "Uso Directo",
                 text: "El producto se aplica de forma concentrada (sin diluir). En superficies con acumulaciones muy gruesas, se recomienda auxiliarse con la fibra verde SWIPE®.",
+                speech: "El producto se aplica de forma concentrada y directa. En superficies con acumulaciones gruesas, auxíliate con la fibra verde SWIPE.",
                 showAvatar: true
             },
             {
                 badge: "05 // FLUJO DE TURNO",
                 title: "Rutina en 4 Pasos",
+                speech: "Rutina de mantenimiento en 4 pasos: 1. Sopletear polvo grueso. 2. Aplicar SWIPE Shock de manera uniforme. 3. Tallar con fibra si hay grasa adherida. 4. Sopletear para secado rápido.",
                 showAvatar: true,
                 isHtml: true,
                 text: `
@@ -111,6 +152,7 @@
             {
                 badge: "06 // BIOSEGURIDAD",
                 title: "EPP Obligatorio",
+                speech: "Equipo de protección personal obligatorio: Gafas protectoras con protección lateral, guantes de nitrilo de 0.4 milímetros, y mascarilla para vapores orgánicos Tipo A.",
                 showAvatar: true,
                 isHtml: true,
                 text: `
@@ -124,22 +166,25 @@
                 badge: "07 // ALMACENAMIENTO",
                 title: "Control y Seguridad",
                 text: "Líquido inflamable Categoría 3. Mantener en recipientes herméticos etiquetados, alejados de fuentes de calor, chispas o llamas. Temperatura óptima de almacenamiento: 25°C.",
+                speech: "Líquido inflamable Categoría 3. Mantener en recipientes herméticos alejados de fuentes de calor o chispas a una temperatura óptima de 25 grados Celsius.",
                 showAvatar: true
             },
             {
                 badge: "08 // RESPUESTA INMEDIATA",
                 title: "Protocolos de Emergencia",
                 text: "En caso de contacto con la piel, lavar con agua y jabón abundante. En salpicaduras oculares, enjuagar de inmediato. Para derrames, contener con material absorbente no combustible.",
+                speech: "En caso de contacto con la piel, lavar con abundante agua y jabón. En ojos, enjuagar de inmediato. Para derrames, contener con material absorbente no combustible.",
                 showAvatar: true
             },
             {
                 badge: "09 // VERIFICACIÓN RÁPIDA",
                 title: "Mini-Quiz Técnico",
+                speech: "¿Cuál es una condición indispensable antes de aplicar SWIPE Shock? Selecciona la opción correcta.",
                 showAvatar: true,
                 isHtml: true,
                 text: `
                     <p style="font-size:0.85rem; margin-bottom:0.75rem;">¿Cuál es una condición indispensable antes de aplicar SWIPE® Shock?</p>
-                    <div style="text-align:left; font-size:0.85rem; background:#0f172a; padding:0.75rem; border-radius:0.5rem;">
+                    <div style="text-align:left; font-size:0.85rem; background:rgba(15, 23, 42, 0.7); border: 1px solid rgba(51, 65, 85, 0.6); padding:0.75rem; border-radius:0.5rem;">
                         <input type="radio" name="q" id="q1"> <label for="q1">Que el equipo esté fuera de operación</label><br><br>
                         <input type="radio" name="q" id="q2"> <label for="q2">Diluirlo en agua 1:10</label><br><br>
                         <input type="radio" name="q" id="q3"> <label for="q3">Mantenerlo conectado a la corriente</label>
@@ -149,6 +194,7 @@
                 badge: "10 // CIERRE",
                 title: "¡Inducción Concluida!",
                 text: "Has completado la guía técnica de SWIPE® Shock. Recuerda consultar siempre la hoja MSDS ante cualquier duda operativa.",
+                speech: "Has completado la guía técnica de SWIPE Shock. Recuerda consultar siempre la hoja MSDS ante cualquier duda operativa.",
                 showAvatar: true
             }
         ];
@@ -157,6 +203,27 @@
         let isAuto = false;
         let isAudio = false;
         let autoTimer = null;
+
+        function updateDots() {
+            const dotsContainer = document.getElementById('progress-dots');
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, idx) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${idx === currentSlide ? 'active' : ''}`;
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function speakCurrentSlide() {
+            if (!isAudio) return;
+            window.speechSynthesis.cancel();
+            const slide = slides[currentSlide];
+            const textToSpeak = slide.speech || slide.text;
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'es-MX';
+            utterance.rate = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
 
         function renderSlide() {
             const slide = slides[currentSlide];
@@ -178,9 +245,11 @@
                 ${actionBtn}
             `;
 
-            document.getElementById('slide-counter').innerText = `${currentSlide + 1} / ${slides.length}`;
+            updateDots();
             document.getElementById('btn-prev').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
             document.getElementById('btn-next').style.display = slide.isWelcome ? 'none' : 'block';
+
+            speakCurrentSlide();
         }
 
         function nextSlide() {
@@ -213,7 +282,7 @@
                         currentSlide = 0;
                         renderSlide();
                     }
-                }, 4000);
+                }, 6000);
             } else {
                 stopAuto();
             }
@@ -230,7 +299,9 @@
             const btn = document.getElementById('audio-btn');
             if (isAudio) {
                 btn.classList.add('active');
+                speakCurrentSlide();
             } else {
+                window.speechSynthesis.cancel();
                 btn.classList.remove('active');
             }
         }
