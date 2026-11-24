@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWIPE® Shock — Inducción Interactiva</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #eab308;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; }
+        .container { width: 100%; max-width: 420px; background: var(--card-bg); border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5); overflow: hidden; display: flex; flex-direction: column; min-height: 580px; }
+        header { background: #111827; padding: 1rem; text-align: center; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; }
+        .content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        h1 { font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text-main); }
+        p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; }
+        .badge { display: inline-block; background: rgba(234, 179, 8, 0.15); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; }
+        .btn { background: var(--accent); color: #111827; border: none; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; cursor: pointer; transition: opacity 0.2s; width: 100%; margin-top: auto; }
+        .btn:hover { opacity: 0.9; }
+        .footer-nav { display: flex; justify-content: space-between; padding: 1rem 1.5rem; background: #111827; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+        .footer-nav button { background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 600; }
+        .list-box { text-align: left; background: #0f172a; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem; font-size: 0.85rem; }
+        .list-box li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .list-box strong { color: var(--text-main); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header id="header-title">SWIPE® SHOCK · MANTENIMIENTO ELÉCTRICO</header>
+        
+        <div class="content" id="slide-content">
+            <!-- Contenido dinámico por JavaScript -->
+        </div>
+
+        <div class="footer-nav">
+            <button onclick="prevSlide()" id="btn-prev">← Anterior</button>
+            <span id="slide-counter">1 / 11</span>
+            <button onclick="nextSlide()" id="btn-next">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            {
+                badge: "00 // BIENVENIDA",
+                title: "SWIPE® Shock",
+                text: "Inducción interactiva para el correcto uso, aplicación segura y bioseguridad del solvente dieléctrico biodegradable.",
+                actionText: "Iniciar Inducción"
+            },
+            {
+                badge: "01 // PERFIL DEL PRODUCTO",
+                title: "¿Qué es SWIPE® Shock?",
+                text: "Es un solvente dieléctrico formulado con destilados cítricos biodegradables (d-limoneno) diseñado para limpieza de equipos eléctricos fuera de operación[cite: 5, 8]. Remueve grasa, aceite y carboncillos eficazmente[cite: 5]."
+            },
+            {
+                badge: "02 // MECANISMO TÉCNICO",
+                title: "Rigidez Dieléctrica Superior",
+                text: "Posee una alta rigidez dieléctrica certificada en laboratorio (superior a 36.2 kV), lo que impide la formación de arcos eléctricos[cite: 3, 5]. No deja residuos de evaporación[cite: 5]."
+            },
+            {
+                badge: "03 // COMPATIBILIDAD",
+                title: "¿Dónde SÍ y dónde NO?",
+                isHtml: true,
+                text: `
+                    <ul class="list-box">
+                        <li><strong>Áreas SÍ:</strong> Motores eléctricos fuera de operación, tableros de control, arrancadores y conectores[cite: 5].</li>
+                        <li><strong>Restricción:</strong> Nunca aplicar en equipos energizados o en operación[cite: 5].</li>
+                    </ul>`
+            },
+            {
+                badge: "04 // DOSIFICACIÓN",
+                title: "Uso Directo",
+                text: "El producto se aplica de forma concentrada (sin diluir). En superficies con acumulaciones muy gruesas, se recomienda auxiliarse con la fibra verde SWIPE®[cite: 5]."
+            },
+            {
+                badge: "05 // FLUJO DE TURNO",
+                title: "Rutina en 4 Pasos",
+                isHtml: true,
+                text: `
+                    <ul class="list-box">
+                        <li>1. Sopletear el equipo con aire para retirar polvo grueso[cite: 5].</li>
+                        <li>2. Aplicar SWIPE® Shock de manera uniforme[cite: 5].</li>
+                        <li>3. Tallar con fibra si hay capas adheridas[cite: 5].</li>
+                        <li>4. Sopletear nuevamente para un secado rápido[cite: 5].</li>
+                    </ul>`
+            },
+            {
+                badge: "06 // BIOSEGURIDAD",
+                title: "EPP Obligatorio",
+                isHtml: true,
+                text: `
+                    <ul class="list-box">
+                        <li><strong>Ojos:</strong> Gafas protectoras con protección lateral[cite: 13].</li>
+                        <li><strong>Manos:</strong> Guantes de nitrilo (grosor 0.4 mm, >480 min de resistencia)[cite: 13].</li>
+                        <li><strong>Vías Respiratorias:</strong> Mascarilla para vapores orgánicos (Tipo A)[cite: 13].</li>
+                    </ul>`
+            },
+            {
+                badge: "07 // ALMACENAMIENTO",
+                title: "Control y Seguridad",
+                text: "Líquido inflamable Categoría 3[cite: 8]. Mantener en recipientes herméticos etiquetados, alejados de fuentes de calor, chispas o llamas[cite: 12]. Temperatura óptima de almacenamiento: 25°C[cite: 12]."
+            },
+            {
+                badge: "08 // RESPUESTA INMEDIATA",
+                title: "Protocolos de Emergencia",
+                text: "En caso de contacto con la piel, lavar con agua y jabón abundante[cite: 10]. En salpicaduras oculares, enjuagar de inmediato. Para derrames, contener con material absorbente no combustible (arena o vermiculita)[cite: 11]."
+            },
+            {
+                badge: "09 // VERIFICACIÓN RÁPIDA",
+                title: "Mini-Quiz Técnico",
+                text: "¿Cuál es una condición indispensable antes de aplicar SWIPE® Shock en un motor eléctrico?",
+                isHtml: true,
+                text: `
+                    <p style="font-size:0.9rem; margin-bottom:0.75rem;">¿Cuál es una condición indispensable antes de aplicar el producto?</p>
+                    <div style="text-align:left; font-size:0.85rem; background:#0f172a; padding:0.75rem; border-radius:0.5rem;">
+                        <input type="radio" name="q" id="q1"> <label for="q1">Que el equipo esté fuera de operación[cite: 5]</label><br><br>
+                        <input type="radio" name="q" id="q2"> <label for="q2">Diluirlo en agua 1:10</label><br><br>
+                        <input type="radio" name="q" id="q3"> <label for="q3">Mantenerlo conectado a la corriente</label>
+                    </div>`
+            },
+            {
+                badge: "10 // CIERRE",
+                title: "¡Inducción Concluida!",
+                text: "Has completado la guía técnica de SWIPE® Shock. Recuerda consultar siempre la hoja MSDS ante cualquier duda operativa[cite: 6]."
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function renderSlide() {
+            const slide = slides[currentSlide];
+            const contentDiv = document.getElementById('slide-content');
+            
+            let bodyContent = `<p>${slide.text}</p>`;
+            if (slide.isHtml) {
+                bodyContent = slide.text;
+            }
+
+            contentDiv.innerHTML = `
+                <div class="badge">${slide.badge}</div>
+                <h1>${slide.title}</h1>
+                ${bodyContent}
+            `;
+
+            document.getElementById('slide-counter').innerText = `${currentSlide + 1} / ${slides.length}`;
+            document.getElementById('btn-prev').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+            document.getElementById('btn-next').innerText = currentSlide === slides.length - 1 ? 'Finalizar' : 'Siguiente →';
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                renderSlide();
+            } else {
+                currentSlide = 0;
+                renderSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        renderSlide();
+    </script>
+</body>
+</html>
