@@ -16,7 +16,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; position: relative; overflow-x: hidden; }
         
-        /* Fondo estelar dinámico */
         .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: radial-gradient(circle at center, #111827 0%, #090d16 100%); overflow: hidden; }
         .star { position: absolute; background: #38bdf8; opacity: 0.6; border-radius: 50%; animation: twinkle 4s infinite ease-in-out; }
         @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
@@ -118,11 +117,7 @@
                 speech: "Áreas de aplicación recomendadas: Motores eléctricos fuera de operación, tableros de control y conectores. Restricción absoluta: Nunca aplicar en equipos energizados.",
                 showAvatar: true,
                 isHtml: true,
-                text: `
-                    <ul class="list-box">
-                        <li><strong>Áreas SÍ:</strong> Motores eléctricos fuera de operación, tableros de control y conectores.</li>
-                        <li><strong>Restricción:</strong> Nunca aplicar en equipos energizados o en operación.</li>
-                    </ul>`
+                text: `<ul class="list-box"><li><strong>Áreas SÍ:</strong> Motores eléctricos fuera de operación, tableros de control y conectores.</li><li><strong>Restricción:</strong> Nunca aplicar en equipos energizados o en operación.</li></ul>`
             },
             {
                 badge: "04 // DOSIFICACIÓN",
@@ -137,13 +132,7 @@
                 speech: "Rutina en 4 pasos: 1. Sopletear polvo. 2. Aplicar SWIPE Shock de manera uniforme. 3. Tallar con fibra si hay grasa. 4. Sopletear para secado rápido.",
                 showAvatar: true,
                 isHtml: true,
-                text: `
-                    <ul class="list-box">
-                        <li>1. Sopletear el equipo con aire para retirar polvo grueso.</li>
-                        <li>2. Aplicar SWIPE® Shock de manera uniforme.</li>
-                        <li>3. Tallar con fibra si hay capas adheridas.</li>
-                        <li>4. Sopletear nuevamente para un secado rápido.</li>
-                    </ul>`
+                text: `<ul class="list-box"><li>1. Sopletear el equipo con aire para retirar polvo grueso.</li><li>2. Aplicar SWIPE® Shock de manera uniforme.</li><li>3. Tallar con fibra si hay capas adheridas.</li><li>4. Sopletear nuevamente para un secado rápido.</li></ul>`
             },
             {
                 badge: "06 // BIOSEGURIDAD",
@@ -151,12 +140,7 @@
                 speech: "Equipo de protección personal obligatorio: Gafas con protección lateral, guantes de nitrilo de 0.4 milímetros y mascarilla para vapores orgánicos Tipo A.",
                 showAvatar: true,
                 isHtml: true,
-                text: `
-                    <ul class="list-box">
-                        <li><strong>Ojos:</strong> Gafas con protección lateral.</li>
-                        <li><strong>Manos:</strong> Guantes de nitrilo (grosor 0.4 mm).</li>
-                        <li><strong>Respiratoria:</strong> Mascarilla para vapores orgánicos (Tipo A).</li>
-                    </ul>`
+                text: `<ul class="list-box"><li><strong>Ojos:</strong> Gafas con protección lateral.</li><li><strong>Manos:</strong> Guantes de nitrilo (grosor 0.4 mm).</li><li><strong>Respiratoria:</strong> Mascarilla para vapores orgánicos (Tipo A).</li></ul>`
             },
             {
                 badge: "07 // ALMACENAMIENTO",
@@ -178,131 +162,9 @@
                 speech: "¿Cuál es una condición indispensable antes de aplicar SWIPE Shock? Selecciona la opción correcta.",
                 showAvatar: true,
                 isHtml: true,
-                text: `
-                    <p style="font-size:0.85rem; margin-bottom:0.75rem;">¿Condición indispensable antes de aplicar SWIPE® Shock?</p>
-                    <div style="text-align:left; font-size:0.85rem; background:rgba(15, 23, 42, 0.7); border: 1px solid rgba(51, 65, 85, 0.6); padding:0.75rem; border-radius:0.5rem;">
-                        <input type="radio" name="q" id="q1"> <label for="q1">Que el equipo esté fuera de operación</label><br><br>
-                        <input type="radio" name="q" id="q2"> <label for="q2">Diluirlo en agua 1:10</label><br><br>
-                        <input type="radio" name="q" id="q3"> <label for="q3">Mantenerlo conectado a corriente</label>
-                    </div>`
+                text: `<p style="font-size:0.85rem; margin-bottom:0.75rem;">¿Condición indispensable antes de aplicar SWIPE® Shock?</p><div style="text-align:left; font-size:0.85rem; background:rgba(15, 23, 42, 0.7); border: 1px solid rgba(51, 65, 85, 0.6); padding:0.75rem; border-radius:0.5rem;"><input type="radio" name="q" id="q1"> <label for="q1">Que el equipo esté fuera de operación</label><br><br><input type="radio" name="q" id="q2"> <label for="q2">Diluirlo en agua 1:10</label><br><br><input type="radio" name="q" id="q3"> <label for="q3">Mantenerlo conectado a corriente</label></div>`
             },
             {
                 badge: "10 // CIERRE",
                 title: "¡Inducción Concluida!",
-                text: "Has completado la guía técnica de SWIPE® Shock. Consulta siempre la hoja MSDS ante cualquier duda operativa.",
-                speech: "Has completado la guía técnica de SWIPE Shock. Consulta siempre la hoja MSDS.",
-                showAvatar: true
-            }
-        ];
-
-        let currentSlide = 0;
-        let isAuto = false;
-        let isAudio = false;
-        let autoTimer = null;
-
-        function updateDots() {
-            const dotsContainer = document.getElementById('progress-dots');
-            dotsContainer.innerHTML = '';
-            slides.forEach((_, idx) => {
-                const dot = document.createElement('div');
-                dot.className = `dot ${idx === currentSlide ? 'active' : ''}`;
-                dotsContainer.appendChild(dot);
-            });
-        }
-
-        function speakCurrentSlide() {
-            if (!isAudio) return;
-            window.speechSynthesis.cancel();
-            const slide = slides[currentSlide];
-            const textToSpeak = slide.speech || slide.text;
-            const utterance = new SpeechSynthesisUtterance(textToSpeak);
-            utterance.lang = 'es-MX';
-            utterance.rate = 1.0;
-            window.speechSynthesis.speak(utterance);
-        }
-
-        function renderSlide() {
-            const slide = slides[currentSlide];
-            const contentDiv = document.getElementById('slide-content');
-            
-            let bodyContent = `<p>${slide.text}</p>`;
-            if (slide.isHtml) {
-                bodyContent = slide.text;
-            }
-
-            let avatarHtml = slide.showAvatar ? `<div class="avatar-container"><div class="avatar">🤖</div></div>` : '';
-            let actionBtn = slide.isWelcome ? `<button class="btn" onclick="nextSlide()">Iniciar Inducción →</button>` : '';
-
-            contentDiv.innerHTML = `
-                <div class="badge">${slide.badge}</div>
-                ${avatarHtml}
-                <h1>${slide.title}</h1>
-                ${bodyContent}
-                ${actionBtn}
-            `;
-
-            updateDots();
-            document.getElementById('btn-prev').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
-            document.getElementById('btn-next').style.display = slide.isWelcome ? 'none' : 'block';
-
-            speakCurrentSlide();
-        }
-
-        function nextSlide() {
-            if (currentSlide < slides.length - 1) {
-                currentSlide++;
-                renderSlide();
-            } else {
-                currentSlide = 0;
-                renderSlide();
-                stopAuto();
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                renderSlide();
-            }
-        }
-
-        function toggleAuto() {
-            isAuto = !isAuto;
-            const btn = document.getElementById('auto-btn');
-            if (isAuto) {
-                btn.classList.add('active');
-                autoTimer = setInterval(() => {
-                    if (currentSlide < slides.length - 1) {
-                        nextSlide();
-                    } else {
-                        currentSlide = 0;
-                        renderSlide();
-                    }
-                }, 6000);
-            } else {
-                stopAuto();
-            }
-        }
-
-        function stopAuto() {
-            isAuto = false;
-            clearInterval(autoTimer);
-            document.getElementById('auto-btn').classList.remove('active');
-        }
-
-        function toggleAudio() {
-            isAudio = !isAudio;
-            const btn = document.getElementById('audio-btn');
-            if (isAudio) {
-                btn.classList.add('active');
-                speakCurrentSlide();
-            } else {
-                window.speechSynthesis.cancel();
-                btn.classList.remove('active');
-            }
-        }
-
-        renderSlide();
-    </script>
-</body>
-</html>
+                text: "Has completado la guía técnica de SWIPE® Shock. Consulta siempre la hoja
