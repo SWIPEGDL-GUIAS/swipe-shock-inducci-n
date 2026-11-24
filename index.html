@@ -3,68 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWIPE® Shock — Inducción Interactiva | Mantenimiento</title>
+    <title>SWIPE® Shock — Inducción Interactiva</title>
     <style>
         :root {
-            --bg-dark: #090d16;
-            --card-bg: rgba(30, 41, 59, 0.95);
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
             --accent: #eab308;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border: rgba(51, 65, 85, 0.6);
+            --border: #334155;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; }
-        
-        .container { width: 100%; max-width: 440px; background: var(--card-bg); border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: 0 25px 50px rgba(0,0,0,0.8); display: flex; flex-direction: column; min-height: 580px; overflow: hidden; }
-        
-        header { background: #0f172a; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); font-size: 0.75rem; color: var(--accent); font-weight: 700; }
-        
-        .content { padding: 2rem; flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-        
-        .badge { display: inline-block; background: rgba(234, 179, 8, 0.15); color: var(--accent); padding: 0.35rem 1rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; margin-bottom: 1.25rem; border: 1px solid rgba(234, 179, 8, 0.3); }
-        
-        .avatar { width: 72px; height: 72px; background: rgba(51, 65, 85, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; border: 2px solid var(--accent); margin: 0 auto 1.25rem auto; box-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
-        
-        h1 { font-size: 1.4rem; margin-bottom: 0.75rem; color: var(--text-main); font-weight: 700; }
-        p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
-        
-        .list-box { text-align: left; background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem; font-size: 0.85rem; }
-        .list-box li { margin-bottom: 0.5rem; color: var(--text-muted); line-height: 1.4; }
+        .container { width: 100%; max-width: 420px; background: var(--card-bg); border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5); overflow: hidden; display: flex; flex-direction: column; min-height: 580px; }
+        header { background: #111827; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+        .top-controls { display: flex; gap: 0.5rem; }
+        .control-btn { background: #334155; border: none; color: #fff; padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem; cursor: pointer; }
+        .control-btn.active { background: var(--accent); color: #111827; font-weight: 700; }
+        .content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        h1 { font-size: 1.4rem; margin-bottom: 0.75rem; color: var(--text-main); }
+        p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem; }
+        .badge { display: inline-block; background: rgba(234, 179, 8, 0.15); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; }
+        .avatar-container { margin-bottom: 1rem; display: flex; justify-content: center; }
+        .avatar { width: 64px; height: 64px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 2px solid var(--accent); box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3); }
+        .btn { background: var(--accent); color: #111827; border: none; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; cursor: pointer; transition: opacity 0.2s; width: 100%; margin-top: auto; }
+        .btn:hover { opacity: 0.9; }
+        .footer-nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: #111827; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+        .footer-nav button { background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 600; }
+        .list-box { text-align: left; background: #0f172a; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem; font-size: 0.85rem; }
+        .list-box li { margin-bottom: 0.5rem; color: var(--text-muted); }
         .list-box strong { color: var(--text-main); }
-
-        .btn { background: var(--accent); color: #111827; border: none; padding: 0.85rem 1.5rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; cursor: pointer; width: 100%; margin-top: auto; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3); }
-        
-        .footer-nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: #0f172a; border-top: 1px solid var(--border); font-size: 0.85rem; }
-        .footer-nav span { color: var(--accent); font-weight: 600; cursor: pointer; }
     </style>
 </head>
 <body>
+
     <div class="container">
         <header>
-            <span>SWIPE® SHOCK · MANTENIMIENTO</span>
-            <span>01 / 05</span>
+            <span id="header-title">SWIPE® SHOCK · MANTENIMIENTO</span>
+            <div class="top-controls">
+                <button class="control-btn" id="audio-btn" onclick="toggleAudio()">🔊 Audio</button>
+                <button class="control-btn" id="auto-btn" onclick="toggleAuto()">🤖 Auto</button>
+            </div>
         </header>
         
-        <div class="content">
-            <span class="badge">00 // BIENVENIDA</span>
-            <div class="avatar">🤖</div>
-            <h1>Conociendo SWIPE® Shock</h1>
-            <p>Solvente dieléctrico biodegradable diseñado para la limpieza segura de equipos eléctricos fuera de operación.</p>
-            
-            <ul class="list-box">
-                <li><strong>Perfil:</strong> Destilados cítricos (d-limoneno).</li>
-                <li><strong>Rigidez:</strong> Superior a 36.2 kV.</li>
-                <li><strong>Restricción:</strong> Nunca aplicar en equipos energizados.</li>
-            </ul>
-
-            <button class="btn" onclick="alert('¡Inducción iniciada con éxito!')">Iniciar Inducción →</button>
+        <div class="content" id="slide-content">
+            <!-- Contenido dinámico -->
         </div>
 
         <div class="footer-nav">
-            <span>← Anterior</span>
-            <span>Siguiente →</span>
+            <button onclick="prevSlide()" id="btn-prev">← Anterior</button>
+            <span id="slide-counter">1 / 11</span>
+            <button onclick="nextSlide()" id="btn-next">Siguiente →</button>
         </div>
     </div>
+
+    <script>
+        const slides = [
+            {
+                badge: "00 // BIENVENIDA",
+                title: "Conociendo SWIPE® Shock",
+                text: "Inducción interactiva con Gemi. Conoce el solvente dieléctrico biodegradable, su aplicación técnica segura y bioseguridad.",
+                showAvatar: true,
+                isWelcome: true
+            },
+            {
+                badge: "01 // PERFIL DEL PRODUCTO",
+                title: "¿Qué es SWIPE® Shock?",
+                text: "Es un solvente dieléctrico formulado con destilados cítricos biodegradables (d-limoneno) diseñado para la limpieza de equipos eléctricos fuera de operación. Remueve grasa, aceite y carboncillos de forma eficaz.",
+                showAvatar: true
+            },
+            {
+                badge: "02 // MECANISMO TÉCNICO",
+                title: "Rigidez Dieléctrica Superior",
+                text: "Posee alta rigidez dieléctrica certificada en laboratorio (superior a 36.2 kV), lo que impide la formación de arcos eléctricos. No deja residuos de evaporación.",
+                showAvatar: true
+            },
+            {
+                badge: "03 // COMPATIBILIDAD",
+                title: "¿Dónde SÍ y dónde NO?",
+                showAvatar: true,
+                isHtml: true,
+                text: `
+                    <ul class="list-box">
+                        <li><strong>Áreas SÍ:</strong> Motores eléctricos fuera de operación, tableros de control, arrancadores y conectores.</li>
+                        <li><strong>Restricción:</strong> Nunca aplicar en equipos energizados o en operación.</li>
+                    </ul>`
+            },
+            {
+                badge: "04 // DOSIFICACIÓN",
+                title: "Uso Directo",
+                text: "El producto se aplica de forma concentrada (sin diluir). En superficies con acumulaciones muy gruesas, se recomienda auxiliarse con la fibra verde SWIPE®.",
+                showAvatar: true
+            },
+            {
+                badge: "05 // FLUJO DE TURNO",
+                title: "Rutina en 4 Pasos",
+                showAvatar: true,
+                isHtml: true,
+                text: `
+                    <ul class="list-box">
+                        <li>1. Sopletear el equipo con aire para retirar polvo grueso.</li>
+                        <li>2. Aplicar SWIPE® Shock de manera uniforme.</li>
+                        <li>3. Tallar con fibra si hay capas adheridas.</li>
+                        <li>4. Sopletear nuevamente para un secado rápido.</li>
+                    </ul>`
+            },
+            {
+                badge: "06 // BIOSEGURIDAD",
+                title: "EPP Obligatorio",
+                showAvatar: true,
+                isHtml: true,
+                text: `
+                    <ul class="list-box">
+                        <li><strong>Ojos:</strong> Gafas protectoras con protección lateral.</li>
+                        <li><strong>Manos:</strong> Guantes de nitrilo (grosor 0.4 mm, >480 min de resistencia).</li>
+                        <li><strong>Vías Respiratorias:</strong> Mascarilla para vapores orgánicos (Tipo A).</li>
+                    </ul>`
+            },
+            {
+                badge: "07 // ALMACENAMIENTO",
+                title: "Control y Seguridad",
+                text: "Líquido inflamable Categoría 3. Mantener en recipientes herméticos etiquetados, alejados de fuentes de calor, chispas o llamas. Temperatura óptima de almacenamiento: 25°C.",
+                showAvatar: true
+            },
+            {
+                badge: "08 // RESPUESTA INMEDIATA",
+                title: "Protocolos de Emergencia",
+                text: "En caso de contacto con la piel, lavar con agua y jabón abundante. En salpicaduras oculares, enjuagar de inmediato. Para derrames, contener con material absorbente no combustible.",
+                showAvatar: true
+            },
+            {
+                badge: "09 // VERIFICACIÓN RÁPIDA",
+                title: "Mini-Quiz Técnico",
+                showAvatar: true,
+                isHtml: true,
+                text: `
+                    <p style="font-size:0.85rem; margin-bottom:0.75rem;">¿Cuál es una condición indispensable antes de aplicar SWIPE® Shock?</p>
+                    <div style="text-align:left; font-size:0.85rem; background:#0f172a; padding:0.75rem; border-radius:0.5rem;">
+                        <input type="radio" name="q" id="q1"> <label for="q1">Que el equipo esté fuera de operación</label><br><br>
+                        <input type="radio" name="q" id="q2"> <label for="q2">Diluirlo en agua 1:10</label><br><br>
+                        <input type="radio" name="q" id="q3"> <label for="q3">Mantenerlo conectado a la corriente</label>
+                    </div>`
+            },
+            {
+                badge: "10 // CIERRE",
+                title: "¡Inducción Concluida!",
+                text: "Has completado la guía técnica de SWIPE® Shock. Recuerda consultar siempre la hoja MSDS ante cualquier duda operativa.",
+                showAvatar: true
+            }
+        ];
+
+        let currentSlide = 0;
+        let isAuto = false;
+        let isAudio = false;
+        let autoTimer = null;
+
+        function renderSlide() {
+            const slide = slides[currentSlide];
+            const contentDiv = document.getElementById('slide-content');
+            
+            let bodyContent = `<p>${slide.text}</p>`;
+            if (slide.isHtml) {
+                bodyContent = slide.text;
+            }
+
+            let avatarHtml = slide.showAvatar ? `<div class="avatar-container"><div class="avatar">🤖</div></div>` : '';
+            let actionBtn = slide.isWelcome ? `<button class="btn" onclick="nextSlide()">Iniciar Inducción →</button>` : '';
+
+            contentDiv.innerHTML = `
+                <div class="badge">${slide.badge}</div>
+                ${avatarHtml}
+                <h1>${slide.title}</h1>
+                ${bodyContent}
+                ${actionBtn}
+            `;
+
+            document.getElementById('slide-counter').innerText = `${currentSlide + 1} / ${slides.length}`;
+            document.getElementById('btn-prev').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+            document.getElementById('btn-next').style.display = slide.isWelcome ? 'none' : 'block';
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                renderSlide();
+            } else {
+                currentSlide = 0;
+                renderSlide();
+                stopAuto();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        function toggleAuto() {
+            isAuto = !isAuto;
+            const btn = document.getElementById('auto-btn');
+            if (isAuto) {
+                btn.classList.add('active');
+                autoTimer = setInterval(() => {
+                    if (currentSlide < slides.length - 1) {
+                        nextSlide();
+                    } else {
+                        currentSlide = 0;
+                        renderSlide();
+                    }
+                }, 4000);
+            } else {
+                stopAuto();
+            }
+        }
+
+        function stopAuto() {
+            isAuto = false;
+            clearInterval(autoTimer);
+            document.getElementById('auto-btn').classList.remove('active');
+        }
+
+        function toggleAudio() {
+            isAudio = !isAudio;
+            const btn = document.getElementById('audio-btn');
+            if (isAudio) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        renderSlide();
+    </script>
 </body>
 </html>
